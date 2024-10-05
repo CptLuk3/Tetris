@@ -12,7 +12,7 @@ public class Methods extends JPanel {
     private int rotation;
     private int currentPiece;
     private Point pieceOrigin;
-    private ArrayList<Integer> nextPieces = new ArrayList<>();
+    private final ArrayList<Integer> nextPieces = new ArrayList<>();
 
     private Color[][] well;
     private long score;
@@ -36,21 +36,21 @@ public class Methods extends JPanel {
         if (newRotation < 0) {
             newRotation = 3;
         }
-        if (!collidesAt(pieceOrigin.x, pieceOrigin.y, newRotation)) {
+        if (collidesNotAt(pieceOrigin.x, pieceOrigin.y, newRotation)) {
             rotation = newRotation;
         }
         repaint();
     }
 
     public void move(int move) {
-        if (!collidesAt(pieceOrigin.x, pieceOrigin.y, rotation)) {
+        if (collidesNotAt(pieceOrigin.x, pieceOrigin.y, rotation)) {
             pieceOrigin.x += move;
         }
         repaint();
     }
 
     public void dropDown() {
-        if (!collidesAt(pieceOrigin.x, pieceOrigin.y, rotation)) {
+        if (collidesNotAt(pieceOrigin.x, pieceOrigin.y, rotation)) {
             pieceOrigin.y += 1;
         } else {
             fixToWell();
@@ -114,13 +114,13 @@ public class Methods extends JPanel {
         }
     }
 
-    private boolean collidesAt(int x, int y, int rotation) {
+    private boolean collidesNotAt(int x, int y, int rotation) {
         for (Point p : getTetramino(currentPiece, rotation)) {
             if (well[p.x + x][p.y + y] != Color.BLACK) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     private void drawPiece(Graphics g) {

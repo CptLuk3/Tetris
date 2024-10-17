@@ -46,7 +46,7 @@ public class Tetris extends Methods{
                     try {
                         Thread.sleep(1000);
                         game.dropDown();
-                    } catch (InterruptedException e) {
+                    } catch (InterruptedException _) {
 
                     }
                 }
